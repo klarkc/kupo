@@ -3,13 +3,13 @@
 --  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module Kupo.App.FetchTip.Ogmios
-    ( withFetchTipClient
+    ( newFetchTipClient
     ) where
 
 import Kupo.Prelude
 
 import Kupo.Data.FetchTip
-    ( FetchTipClient,
+    ( FetchTipClient
     )
 import Kupo.Data.Ogmios
     ( NextBlockResponse (..)
@@ -20,11 +20,11 @@ import Kupo.Data.Ogmios
 import qualified Network.WebSockets.Json as WS
 import qualified Network.WebSockets.Tls as WSS
 
-withFetchTipClient
+newFetchTipClient
     :: String
     -> Int
     -> FetchTipClient IO
-withFetchTipClient host port = WSS.runClient host port $ \ws -> do
+newFetchTipClient host port = WSS.runClient host port $ \ws -> do
     WS.sendJson ws encodeNextBlockRequest
     WS.receiveJson ws decodeNextBlockResponse >>= \case
         RollBackward tip _point -> do

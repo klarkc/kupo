@@ -5,12 +5,22 @@
 module Kupo.Data.FetchTip where
 
 import Kupo.Prelude
-import Kupo.Data.Cardano (Tip)
 
-data NodeAtOriginException = NodeAtOriginException
+import Kupo.Data.Cardano
+    ( Tip
+    )
+
+data UnableToFetchTipFromReadOnlyReplicaException
+    = UnableToFetchTipFromReadOnlyReplica
     deriving (Generic, Show, Eq)
 
-instance Exception NodeAtOriginException
+instance Exception UnableToFetchTipFromReadOnlyReplicaException
+
+data UnableToFetchTipFromHydraException
+    = UnableToFetchTipFromHydra
+    deriving (Generic, Show, Eq)
+
+instance Exception UnableToFetchTipFromHydraException
 
 --  | A simple tip fetch client
 type FetchTipClient m = m Tip
